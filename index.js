@@ -51,11 +51,9 @@ app.get('/', (requisicao, resposta) => {
             }
         })
 
-        console.log(tarefas)
-        console.log(dados)
+        resposta.render("home", { tarefas })
+        
     })
-
-    resposta.render("home")
 })
 
 const conexao = mysql.createConnection({
