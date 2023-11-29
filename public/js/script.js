@@ -10,6 +10,18 @@ function CompletarTarefa(id) {
     window.location.reload()
 }
 
+function DescompletarTarefa (id) {
+    fetch("http://localhost:3000/descompletar", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+    })
+    
+    window.location.reload()
+}
+
 function alterartema() {
     const tema = localStorage.getItem("tema")
     const body = document.querySelector("body")
