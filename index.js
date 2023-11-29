@@ -4,8 +4,8 @@ const mysql = require("mysql2")
 
 const app = express()
 
-app.engine("handlebars", exphbs.engine())
-app.set("view engine", "handlebars")
+app.engine('handlebars', exphbs.engine())
+app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 
@@ -17,22 +17,20 @@ app.use(express.urlencoded({
 // rotas
 app.post('/completar', (requisicao, resposta) => {
     const id = requisicao.body.id
-
-    console.log(id)
     
-    // const sql = `
-    //     UPDATE tarefas
-    //     SET completa = '1'
-    //     WHERE id = ${id};
-    // `
+    const sql = `
+        UPDATE tarefas
+        SET completa = '1'
+        WHERE id = ${id}
+    `
 
-    // conexao.query(sql, (erro) => {
-    //     if (erro) {
-    //         return console.log(erro)
-    //     }
+    conexao.query(sql, (erro) => {
+        if (erro) {
+            return console.log(erro)
+        }
         
-    //     resposta.redirect('/')
-    // })
+        resposta.redirect('/')
+    })
 })
 
 app.post('/criar', (requisicao, resposta) => {
@@ -56,8 +54,6 @@ app.post('/criar', (requisicao, resposta) => {
 
 
 app.get('/', (requisicao, resposta) => {
-    // resposta.send("ola mundo")
-
     const sql = 'SELECT * FROM tarefas'
 
     conexao.query(sql, (erro, dados) => {
@@ -83,7 +79,7 @@ const conexao = mysql.createConnection({
     user: "root",
     password: "root",
     database: "todoapp",
-    port: 3306,
+    port: "3306"
 })
 
 conexao.connect((erro) => {
