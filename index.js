@@ -15,6 +15,23 @@ app.use(express.urlencoded({
 }))
 
 // rotas
+app.post('/excluir', (requisicao, resposta) => {
+    const id = requisicao.body.id
+
+    const sql = `
+        DELETE FROM tarefas
+        WHERE id = ${id}
+    `
+
+    conexao.query(sql, (erro) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        resposta.redirect('/')
+    })
+})
+
 app.post('/descompletar', (requisicao, resposta) => {
     const sql = `
         UPDATE tarefas
