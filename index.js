@@ -18,7 +18,7 @@ app.use(express.urlencoded({
 app.post('/descompletar', (requisicao, resposta) => {
     const sql = `
         UPDATE tarefas
-        SET completa = '0'
+        SET completa = 0
         WHERE id = ${id}
     `
 
@@ -36,7 +36,7 @@ app.post('/completar', (requisicao, resposta) => {
     
     const sql = `
         UPDATE tarefas
-        SET completa = '1'
+        SET completa = 1
         WHERE id = ${id}
     `
 
@@ -67,10 +67,35 @@ app.post('/criar', (requisicao, resposta) => {
     })
 })
 
+app.get('/completas', (requisicao, resposta) => {
+    const sql = `
+        SELECT * FROM tarefas
+        WHERE completa = 1
+    `
+
+    conexao.query(sql, (erro, dados) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        const tarefas = dados.map((dado) => {
+            return {
+                id: dado.id,
+                descricao: dado.descricao,
+                completa: true
+            }
+        })
+
+        const QtdTarefas = tarefas.length
+
+        resposta.render('completas', {tarefas, QtdTarefas})
+    })
+})
+
 app.get('/ativas', (requisicao, resposta) => {
     const sql = `
         SELECT * FROM tarefas
-        WHERE completa = '0'
+        WHERE completa = 0
     `
 
     conexao.query(sql, (erro, dados) => {
